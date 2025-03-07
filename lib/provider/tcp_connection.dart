@@ -1,0 +1,65 @@
+import 'dart:async';
+
+import 'package:farmagest/data/constants.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:logger/logger.dart';
+import 'package:tcp_socket_connection/tcp_socket_connection.dart';
+
+class TcpConnectionNotifier extends StateNotifier<String?> {
+  TcpConnectionNotifier() : super('');
+
+  final StreamController<String> _controller =
+      StreamController<String>.broadcast();
+  Stream<String> get responseStream => _controller.stream;
+  TcpSocketConnection socketConnection = TcpSocketConnection(kIp, kPort);
+
+  var logger = Logger(printer: PrettyPrinter());
+
+  void loginRequest() {
+    logger.f('loginRequest');
+    connectAndSendMessage(kIp, kDns, socketConnection);
+  }
+
+  //starting the connection and listening to the socket asynchronously
+  Future<void> connectAndSendMessage(
+    String cHostname,
+    String msg,
+    TcpSocketConnection tcpSocket,
+  ) async {
+    tcpSocket.enableConsolePrint(
+      true,
+    ); //use this to see in the console what's happening
+
+    if (await tcpSocket.canConnect(5000, attempts: 3)) {
+      //check if it's possible to connect to the endpoint
+
+      logger.e(msg);
+      await tcpSocket.connect(5000, messageReceived, attempts: 3);
+      tcpSocket.sendMessage(msg);
+    } else {
+      logger.e(msg);
+    }
+  }
+
+  Future<void> messageReceived(String msg) async {
+    _controller.add(msg);
+
+    //to delete:
+    kCodice = 'farma';
+    kPassword = 'zeffir';
+
+    String kLogin =
+        "login: [ '$kCodice', '$kPassword', '$kAppVer', '$kDeviceId', '$kDeviceModel', '$kDeviceVerRelease', '$kDeviceDisp', '$kRegId' ]";
+    //['farma','zeffir','Farmagest 1.9.8.1','B0173E3B-07D8-4419-8FC1-6623D5104F1F','iPhone13,2','17.6.1','','']
+    if (msg.contains("login:")) {
+      connectAndSendMessage("", kLogin, socketConnection);
+    } else {
+      logger.f(kLogin);
+    }
+  }
+}
+
+final dnsConnectionProvider =
+    StateNotifierProvider<TcpConnectionNotifier, String?>(
+      (ref) => TcpConnectionNotifier(),
+    );

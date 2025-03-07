@@ -6,8 +6,8 @@ const kAppVer = 'Farmagest 1.9.8.1';
 String kCodice = 'farma';
 String kPassword = 'zeffir';
 
-String kTelefono = ''; //'0116699410'; //''; //'21';
-String kOffline = 'false';
+String kLogOut = 'quit:';
+
 String kDeviceId = 'unknown';
 String kDeviceModel = '';
 String kDeviceVerRelease = '';
@@ -15,9 +15,9 @@ String kDeviceDisp = '218.01.16.0219';
 String kRegId = 'null';
 bool kIsConnected = false;
 bool kIsProdottiScreen = false;
-String kDns =
-    "['farma','zeffir','Farmagest 1.9.8.1','B0173E3B-07D8-4419-8FC1-6623D5104F1F','iPhone13,2','17.6.1','','']";
-//"dns: ['', '$kTelefono', '$kDeviceVerRelease' , '$kAppVer']";
+
+String kLogin =
+    "login: ['farma','zeffir','Farmagest 1.9.8.1','B0173E3B-07D8-4419-8FC1-6623D5104F1F','iPhone13,2','17.6.1','',''] ";
 
 //Info
 const kInfoLogin = 'farmaconsult uso interno';

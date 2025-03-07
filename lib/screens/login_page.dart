@@ -3,6 +3,7 @@ import 'package:farmagest/widgets/tab_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:farmagest/provider/tcp_connection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:logger/logger.dart';
 import 'package:riverpod/riverpod.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
@@ -13,6 +14,23 @@ class LoginPage extends ConsumerStatefulWidget {
 }
 
 class LoginPageState extends ConsumerState<LoginPage> {
+  var logger = Logger(printer: PrettyPrinter());
+
+  void login(TcpConnectionNotifier connection, BuildContext context) {
+    try {
+      connection.responseStream.listen((response) {
+        if (response.contains('login: ')) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (ctx) => const TabBarWidget()),
+          );
+        }
+      });
+    } catch (e) {
+      logger.e(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final tcpConnection = ref.read(dnsConnectionProvider.notifier);
@@ -66,6 +84,7 @@ class LoginPageState extends ConsumerState<LoginPage> {
                               onPressed: () {
                                 // se ok chiamo tab bar
                                 tcpConnection.loginRequest();
+                                login(tcpConnection, context);
                                 /* Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(

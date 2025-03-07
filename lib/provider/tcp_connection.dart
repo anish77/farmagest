@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:farmagest/data/constants.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logger/logger.dart';
 import 'package:tcp_socket_connection/tcp_socket_connection.dart';
@@ -17,7 +18,7 @@ class TcpConnectionNotifier extends StateNotifier<String?> {
 
   void loginRequest() {
     logger.f('loginRequest');
-    connectAndSendMessage(kIp, kDns, socketConnection);
+    connectAndSendMessage(kIp, kLogin, socketConnection);
   }
 
   //starting the connection and listening to the socket asynchronously
@@ -43,18 +44,17 @@ class TcpConnectionNotifier extends StateNotifier<String?> {
 
   Future<void> messageReceived(String msg) async {
     _controller.add(msg);
-
-    //to delete:
-    kCodice = 'farma';
-    kPassword = 'zeffir';
-
-    String kLogin =
-        "login: [ '$kCodice', '$kPassword', '$kAppVer', '$kDeviceId', '$kDeviceModel', '$kDeviceVerRelease', '$kDeviceDisp', '$kRegId' ]";
-    //['farma','zeffir','Farmagest 1.9.8.1','B0173E3B-07D8-4419-8FC1-6623D5104F1F','iPhone13,2','17.6.1','','']
     if (msg.contains("login:")) {
-      connectAndSendMessage("", kLogin, socketConnection);
+      logger.i(msg);
     } else {
-      logger.f(kLogin);
+      logger.e("Errore Login");
+      logger.e(msg);
+    }
+  }
+
+  void logOut(String messaggio) {
+    if (socketConnection.isConnected() && messaggio.isNotEmpty) {
+      socketConnection.sendMessage(messaggio);
     }
   }
 }

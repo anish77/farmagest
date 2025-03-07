@@ -42,7 +42,7 @@ class _TabBarWidgetState extends ConsumerState<TabBarWidget> {
               TextButton(
                 onPressed: () {
                   Navigator.pop(context);
-                  tcpConnection.logOut(kLogOut);
+                  tcpConnection.sendMessage(kLogOut);
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(builder: (ctx) => const LoginPage()),

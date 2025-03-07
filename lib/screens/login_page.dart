@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:farmagest/provider/tcp_connection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logger/logger.dart';
-import 'package:riverpod/riverpod.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({super.key});

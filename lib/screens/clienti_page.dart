@@ -28,7 +28,7 @@ class _ClientiPageState extends State<ClientiPage> {
               ),
             ),
           ),
-          backgroundColor: Color.fromARGB(255, 247, 230, 198),
+          backgroundColor: kLightBrown2,
         ),
         body: Container(
           color: kLightBrown, // Assicura che il colore di sfondo riempia tutto

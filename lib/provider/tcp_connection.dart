@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:farmagest/data/constants.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logger/logger.dart';
 import 'package:tcp_socket_connection/tcp_socket_connection.dart';
@@ -52,9 +51,10 @@ class TcpConnectionNotifier extends StateNotifier<String?> {
     }
   }
 
-  void logOut(String messaggio) {
+  void sendMessage(String messaggio) {
     if (socketConnection.isConnected() && messaggio.isNotEmpty) {
       socketConnection.sendMessage(messaggio);
+      logger.d(messaggio);
     }
   }
 }

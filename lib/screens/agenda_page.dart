@@ -1,16 +1,21 @@
+import 'dart:convert';
+
 import 'package:farmagest/data/constants.dart';
+import 'package:farmagest/provider/tcp_connection.dart';
+import 'package:farmagest/screens/agenda_detail_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-class AgendaPage extends StatefulWidget {
+class AgendaPage extends ConsumerStatefulWidget {
   const AgendaPage({super.key});
 
   @override
-  State<AgendaPage> createState() => _MyWidgetState();
+  ConsumerState<AgendaPage> createState() => AgendaPageState();
 }
 
-class _MyWidgetState extends State<AgendaPage> {
-  @override
+class AgendaPageState extends ConsumerState<AgendaPage> {
   // Crea un controller per il calendario
   late final ValueNotifier<DateTime> _selectedDay;
   late final ValueNotifier<DateTime> _focusedDay;
@@ -30,11 +35,41 @@ class _MyWidgetState extends State<AgendaPage> {
     super.dispose();
   }
 
+  Future<void> getDatiAgenda(
+    TcpConnectionNotifier tcpConnection,
+    String formattedDate,
+  ) async {
+    var responseBuffer = '';
+    tcpConnection.responseStream.listen((response) {
+      /* setState(() {
+        _isLoadingProgressIndicator = false;
+      }); */
+
+      responseBuffer += response;
+      if (responseBuffer.isNotEmpty) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder:
+                (ctx) => AgendaDetailPage(
+                  data: formattedDate,
+                  agendaDati: responseBuffer,
+                ),
+          ),
+        );
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    final tcpConnection = ref.read(dnsConnectionProvider.notifier);
+    DateTime dateTime = DateTime.parse(_selectedDay.value.toString());
+    String formattedDate = DateFormat("dd/MM/yy").format(dateTime);
+
     return Scaffold(
       //appBar: AppBar(title: Text('Calendario Flutter')),
-      backgroundColor: Color.fromARGB(255, 247, 230, 198),
+      backgroundColor: kLightBrown2,
       body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -66,7 +101,11 @@ class _MyWidgetState extends State<AgendaPage> {
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16.0),
                     child: ElevatedButton(
-                      onPressed: () {}, //scanBarcode,
+                      onPressed: () {
+                        kRicercaAgenda = '$kRicercaAgenda [["$formattedDate"]]';
+                        tcpConnection.sendMessage(kRicercaAgenda);
+                        getDatiAgenda(tcpConnection, formattedDate);
+                      },
                       style: ButtonStyle(
                         backgroundColor: WidgetStateProperty.all(kLightBrown),
                         side: WidgetStateProperty.all(

@@ -15,7 +15,7 @@ class LoginPage extends ConsumerStatefulWidget {
 
 class LoginPageState extends ConsumerState<LoginPage> {
   var logger = Logger(printer: PrettyPrinter());
-  late Future<void> _loginFuture;
+
   bool isLoading = false;
   TcpSocketConnection socketConnection = TcpSocketConnection(kIp, kPort);
 
@@ -42,9 +42,12 @@ class LoginPageState extends ConsumerState<LoginPage> {
     if (isLoading) {
       showDialogIndicator(context);
     }
-    _loginFuture = ref
+
+    /*  ref
         .read(dnsConnectionProvider.notifier)
-        .connectAndSendMessage(kIp, kLogin, socketConnection);
+        .connectAndSendMessage(kIp, kLogin, socketConnection); */
+    // connection.connectAndSendMessage(kIp, kLogin, socketConnection);
+
     try {
       connection.responseStream.listen((response) {
         if (response.contains('login: ')) {
@@ -116,18 +119,10 @@ class LoginPageState extends ConsumerState<LoginPage> {
                             padding: const EdgeInsets.all(10.0),
                             child: ElevatedButton(
                               onPressed: () {
-                                // se ok chiamo tab bar
-                                //tcpConnection.loginRequest();
                                 isLoading = true;
+                                tcpConnection.loginRequest();
                                 login(tcpConnection, context);
-                                /* Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (ctx) => const TabBarWidget(),
-                                  ),
-                                );*/
-                                // TabBarWidget();
-                              }, //scanBarcode,
+                              },
                               style: ButtonStyle(
                                 backgroundColor: WidgetStateProperty.all(
                                   kLightBrown,

@@ -11,9 +11,14 @@ class TcpConnectionNotifier extends StateNotifier<String?> {
   final StreamController<String> _controller =
       StreamController<String>.broadcast();
   Stream<String> get responseStream => _controller.stream;
-  TcpSocketConnection socketConnection = TcpSocketConnection(kIp, kPort);
+  TcpSocketConnection tcpSocket = TcpSocketConnection(kIp, kPort);
 
   var logger = Logger(printer: PrettyPrinter());
+
+  void loginRequest() {
+    //logger.f(kTelefono);
+    connectAndSendMessage(kIp, kLogin, tcpSocket);
+  }
 
   //starting the connection and listening to the socket asynchronously
   Future<void> connectAndSendMessage(
@@ -47,8 +52,8 @@ class TcpConnectionNotifier extends StateNotifier<String?> {
   }
 
   void sendMessage(String messaggio) {
-    if (socketConnection.isConnected() && messaggio.isNotEmpty) {
-      socketConnection.sendMessage(messaggio);
+    if (tcpSocket.isConnected() && messaggio.isNotEmpty) {
+      tcpSocket.sendMessage(messaggio);
       logger.d(messaggio);
     }
   }

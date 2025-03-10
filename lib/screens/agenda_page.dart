@@ -1,4 +1,4 @@
-import 'dart:convert';
+import 'dart:async';
 
 import 'package:farmagest/data/constants.dart';
 import 'package:farmagest/provider/tcp_connection.dart';
@@ -40,22 +40,25 @@ class AgendaPageState extends ConsumerState<AgendaPage> {
     String formattedDate,
   ) async {
     var responseBuffer = '';
-    tcpConnection.responseStream.listen((response) {
-      /* setState(() {
-        _isLoadingProgressIndicator = false;
-      }); */
+    StreamSubscription? subscription;
 
+    subscription = tcpConnection.responseStream.listen((response) {
       responseBuffer += response;
-      if (responseBuffer.isNotEmpty) {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder:
-                (ctx) => AgendaDetailPage(
-                  data: formattedDate,
-                  agendaDati: responseBuffer,
-                ),
-          ),
-        );
+
+      if (responseBuffer.contains(']]]')) {
+        subscription?.cancel();
+
+        if (mounted) {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder:
+                  (ctx) => AgendaDetailPage(
+                    data: formattedDate,
+                    agendaDati: responseBuffer,
+                  ),
+            ),
+          );
+        }
       }
     });
   }
@@ -120,11 +123,6 @@ class AgendaPageState extends ConsumerState<AgendaPage> {
                 ),
               ],
             ),
-            // Visualizza il giorno selezionato
-            /* Text(
-              'Giorno selezionato: ${_selectedDay.value.toLocal()}',
-              style: TextStyle(fontSize: 16),
-            ),*/
           ],
         ),
       ),

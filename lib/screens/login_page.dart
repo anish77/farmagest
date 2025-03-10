@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:farmagest/provider/tcp_connection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logger/logger.dart';
+import 'package:tcp_socket_connection/tcp_socket_connection.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({super.key});
@@ -14,15 +15,49 @@ class LoginPage extends ConsumerStatefulWidget {
 
 class LoginPageState extends ConsumerState<LoginPage> {
   var logger = Logger(printer: PrettyPrinter());
+  late Future<void> _loginFuture;
+  bool isLoading = false;
+  TcpSocketConnection socketConnection = TcpSocketConnection(kIp, kPort);
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  void showDialogIndicator(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false, // Impedisce di chiudere cliccando fuori
+      builder: (context) {
+        return Center(
+          child: CircularProgressIndicator(
+            //value: _controller.value,
+          ),
+        );
+      },
+    );
+  }
 
   void login(TcpConnectionNotifier connection, BuildContext context) {
+    if (isLoading) {
+      showDialogIndicator(context);
+    }
+    _loginFuture = ref
+        .read(dnsConnectionProvider.notifier)
+        .connectAndSendMessage(kIp, kLogin, socketConnection);
     try {
       connection.responseStream.listen((response) {
         if (response.contains('login: ')) {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (ctx) => const TabBarWidget()),
-          );
+          setState(() {
+            isLoading = false;
+            Navigator.pop(context);
+          });
+          if (isLoading == false) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (ctx) => const TabBarWidget()),
+            );
+          }
         }
       });
     } catch (e) {
@@ -82,7 +117,8 @@ class LoginPageState extends ConsumerState<LoginPage> {
                             child: ElevatedButton(
                               onPressed: () {
                                 // se ok chiamo tab bar
-                                tcpConnection.loginRequest();
+                                //tcpConnection.loginRequest();
+                                isLoading = true;
                                 login(tcpConnection, context);
                                 /* Navigator.pushReplacement(
                                   context,

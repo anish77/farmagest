@@ -134,7 +134,8 @@ class AgendaDetailPage extends StatelessWidget {
           onPressed: () {
             // todo
             // Qui puoi aggiungere logica personalizzata prima di tornare indietro
-            Navigator.pop(context);
+            // Navigator.pop(context);
+            Navigator.of(context).pop();
             //Navigator.popUntil(context, ModalRoute.withName(AgendaPage()));
           },
         ),

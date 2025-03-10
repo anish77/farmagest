@@ -47,8 +47,7 @@ class AgendaPageState extends ConsumerState<AgendaPage> {
 
       responseBuffer += response;
       if (responseBuffer.isNotEmpty) {
-        Navigator.push(
-          context,
+        Navigator.of(context).push(
           MaterialPageRoute(
             builder:
                 (ctx) => AgendaDetailPage(

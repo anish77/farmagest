@@ -15,11 +15,6 @@ class TcpConnectionNotifier extends StateNotifier<String?> {
 
   var logger = Logger(printer: PrettyPrinter());
 
-  void loginRequest() {
-    logger.f('loginRequest');
-    connectAndSendMessage(kIp, kLogin, socketConnection);
-  }
-
   //starting the connection and listening to the socket asynchronously
   Future<void> connectAndSendMessage(
     String cHostname,

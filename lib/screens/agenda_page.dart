@@ -104,9 +104,11 @@ class AgendaPageState extends ConsumerState<AgendaPage> {
                     padding: EdgeInsets.symmetric(horizontal: 16.0),
                     child: ElevatedButton(
                       onPressed: () {
-                        kRicercaAgenda = '$kRicercaAgenda [["$formattedDate"]]';
-                        tcpConnection.sendMessage(kRicercaAgenda);
-                        getDatiAgenda(tcpConnection, formattedDate);
+                        final ricerca = '$kRiceAgenda [["$formattedDate"]]';
+                        tcpConnection.sendMessage(ricerca);
+                        tcpConnection.retrieveDaySchedule();
+
+                        //getDatiAgenda(tcpConnection, formattedDate);
                       },
                       style: ButtonStyle(
                         backgroundColor: WidgetStateProperty.all(kLightBrown),

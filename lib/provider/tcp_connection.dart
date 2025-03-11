@@ -16,8 +16,18 @@ class TcpConnectionNotifier extends StateNotifier<String?> {
   var logger = Logger(printer: PrettyPrinter());
 
   void loginRequest() {
-    //logger.f(kTelefono);
     connectAndSendMessage(kIp, kLogin, tcpSocket);
+  }
+
+  Future<void> retrieveDaySchedule() async {
+    final response = await _controller.stream.first;
+    //final response2 = await _controller.stream.last;
+    print("******************* $response");
+
+    //final isDone = await _controller.done;
+    // print("1111111111111  $response2");
+    print("1111111111111  22222");
+    //return isDone;
   }
 
   //starting the connection and listening to the socket asynchronously

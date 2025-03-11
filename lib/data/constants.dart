@@ -15,7 +15,7 @@ String kDeviceDisp = '';
 String kLogin =
     "login: ['$kCodice','$kPassword','$kAppVer','B0173E3B-07D8-4419-8FC1-6623D5104F1F','iPhone13,2','17.6.1','',''] ";
 String kLogOut = 'quit:';
-String kRicercaAgenda = 'riceagenda: ';
+String kRiceAgenda = 'riceagenda: ';
 
 //Info
 const kInfoLogin = 'farmaconsult uso interno';

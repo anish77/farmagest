@@ -1,5 +1,3 @@
-import 'package:farmagest/screens/agenda_detail_page.dart';
-import 'package:farmagest/screens/agenda_page.dart';
 import 'package:farmagest/screens/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -15,7 +13,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       //theme: theme,
-      home: const LoginPage(), //AgendaPage(),
+      home: const LoginPage(),
     );
   }
 }

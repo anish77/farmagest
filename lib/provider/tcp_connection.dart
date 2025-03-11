@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:farmagest/data/constants.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -19,15 +20,31 @@ class TcpConnectionNotifier extends StateNotifier<String?> {
     connectAndSendMessage(kIp, kLogin, tcpSocket);
   }
 
-  Future<void> retrieveDaySchedule() async {
-    final response = await _controller.stream.first;
-    //final response2 = await _controller.stream.last;
-    print("******************* $response");
+  Future<List<dynamic>> getFullResponseAsList() async {
+    final Completer<List<dynamic>> completer = Completer<List<dynamic>>();
+    String responseBuffer = '';
 
-    //final isDone = await _controller.done;
-    // print("1111111111111  $response2");
-    print("1111111111111  22222");
-    //return isDone;
+    StreamSubscription<dynamic>? subscription;
+    subscription = responseStream.listen((chunk) {
+      responseBuffer += chunk; // Accumula i dati ricevuti
+
+      try {
+        final decoded = jsonDecode(
+          responseBuffer,
+        ); // Prova a decodificare in una lista
+        if (decoded is List) {
+          // Verifica che sia effettivamente una lista
+          subscription?.cancel(); // Se va bene, smetti di ascoltare
+
+          completer.complete(decoded); // Completa il Future con la lista
+        }
+      } catch (e) {
+        // Se il parsing fallisce, aspettiamo altri dati
+        logger.e(e);
+      }
+    });
+
+    return completer.future;
   }
 
   //starting the connection and listening to the socket asynchronously

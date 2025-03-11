@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:farmagest/data/constants.dart';
 import 'package:farmagest/models/info_pers.dart';
-import 'package:farmagest/screens/agenda_page.dart';
 import 'package:flutter/material.dart';
 
 class AgendaDetailPage extends StatelessWidget {
@@ -12,17 +11,13 @@ class AgendaDetailPage extends StatelessWidget {
   });
 
   final String data;
-  final String agendaDati;
+  final List<dynamic> agendaDati;
 
-  List<dynamic> stringToList(String agendaDati) {
-    // Decodifica la stringa JSON in una lista dinamica
-    agendaDati = removeAfter(agendaDati, ']]]');
-
-    List<dynamic> decodedList = jsonDecode(agendaDati);
+  List<dynamic> stringToList(List<dynamic> agendaDati) {
     List<dynamic> agendaDatiFinali = [];
     InfoPers infoPers;
 
-    decodedList.forEach((item) {
+    agendaDati.forEach((item) {
       String oggetto = findValue(item, "OGGETTO");
       String operatore = findValue(item, "OPERATORE");
       String campo02 = findValue(item, "CAMPO02");
@@ -33,7 +28,7 @@ class AgendaDetailPage extends StatelessWidget {
         campo02: campo02,
       );
       agendaDatiFinali.add(infoPers);
-      //print("OGGETTO: $oggetto | OPERATORE: $operatore | CAMPO02: $campo02");
+      //print("OGGETTO: $oggetto | OPERATORE: $operatore | CAMPO02: $campo02");*/
     });
 
     return agendaDatiFinali;

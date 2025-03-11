@@ -35,34 +35,6 @@ class AgendaPageState extends ConsumerState<AgendaPage> {
     super.dispose();
   }
 
-  Future<void> getDatiAgenda(
-    TcpConnectionNotifier tcpConnection,
-    String formattedDate,
-  ) async {
-    var responseBuffer = '';
-    StreamSubscription? subscription;
-
-    subscription = tcpConnection.responseStream.listen((response) {
-      responseBuffer += response;
-
-      if (responseBuffer.contains(']]]')) {
-        subscription?.cancel();
-
-        if (mounted) {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder:
-                  (ctx) => AgendaDetailPage(
-                    data: formattedDate,
-                    agendaDati: responseBuffer,
-                  ),
-            ),
-          );
-        }
-      }
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     final tcpConnection = ref.read(dnsConnectionProvider.notifier);
@@ -103,12 +75,21 @@ class AgendaPageState extends ConsumerState<AgendaPage> {
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16.0),
                     child: ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
                         final ricerca = '$kRiceAgenda [["$formattedDate"]]';
                         tcpConnection.sendMessage(ricerca);
-                        tcpConnection.retrieveDaySchedule();
+                        List<dynamic> fullJson =
+                            await tcpConnection.getFullResponseAsList();
 
-                        //getDatiAgenda(tcpConnection, formattedDate);
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder:
+                                (ctx) => AgendaDetailPage(
+                                  data: formattedDate,
+                                  agendaDati: fullJson,
+                                ),
+                          ),
+                        );
                       },
                       style: ButtonStyle(
                         backgroundColor: WidgetStateProperty.all(kLightBrown),

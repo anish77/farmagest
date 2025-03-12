@@ -16,6 +16,9 @@ String kLogin =
     "login: ['$kCodice','$kPassword','$kAppVer','B0173E3B-07D8-4419-8FC1-6623D5104F1F','iPhone13,2','17.6.1','',''] ";
 String kLogOut = 'quit:';
 String kRiceAgenda = 'riceagenda: ';
+String kFarmacia = 'Borga';
+String kRiceFarma =
+    'riceditt: [["","$kFarmacia","FDPC,A, GUBR,"],"DI",["D1","D2","N11","N13","N2","N2A","N2B","N3","N4","N5"]]';
 
 //Info
 const kInfoLogin = 'farmaconsult uso interno';

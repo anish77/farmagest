@@ -69,6 +69,7 @@ class _TabBarWidgetState extends ConsumerState<TabBarWidget> {
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: kLightBrown2,
         currentIndex: _currentIndex,
         onTap: _onTabSelected,
         selectedItemColor: kAmberRed2,

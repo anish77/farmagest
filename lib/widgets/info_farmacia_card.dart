@@ -1,5 +1,6 @@
 import 'package:farmagest/data/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class InfoFarmaciaCard extends StatelessWidget {
   const InfoFarmaciaCard({
@@ -26,6 +27,42 @@ class InfoFarmaciaCard extends StatelessWidget {
   final String cell;
   final String farmAttiva;
   final int index;
+
+  void _showNumberDialog(BuildContext context) {
+    // print(cell);
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                leading: Icon(Icons.phone),
+                title: Text(telefono),
+                onTap: () => _callNumber(telefono),
+              ),
+              if (cell.isNotEmpty)
+                ListTile(
+                  leading: Icon(Icons.phone),
+                  title: Text(cell),
+                  onTap: () => _callNumber(cell),
+                ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void _callNumber(String number) async {
+    final Uri url = Uri.parse('tel:$number');
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
+    } else {
+      print('Errore: impossibile aprire il numero');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,6 +94,33 @@ class InfoFarmaciaCard extends StatelessWidget {
                   Text('p.iva $pIva'),
                   Text('$telefono   $cell'),
                   Text(farmAttiva),
+                  Row(
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          //print('Bottone premuto!');
+                        },
+                        child: Image.asset(
+                          'assets/images/maps.png',
+                          width: 50,
+                          height: 50,
+                        ),
+                      ),
+
+                      ElevatedButton(
+                        onPressed: () {
+                          _showNumberDialog(context);
+                        },
+
+                        child: Icon(Icons.phone, color: Colors.white),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.green, // Colore del bottone
+                          shape: CircleBorder(), // Per renderlo rotondo
+                          padding: EdgeInsets.all(15), // Padding interno
+                        ),
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ],

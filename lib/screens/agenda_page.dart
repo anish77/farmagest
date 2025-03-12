@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:farmagest/data/constants.dart';
 import 'package:farmagest/provider/tcp_connection.dart';
 import 'package:farmagest/screens/agenda_detail_page.dart';

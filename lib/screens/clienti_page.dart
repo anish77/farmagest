@@ -1,19 +1,24 @@
 import 'package:farmagest/data/constants.dart';
+import 'package:farmagest/provider/tcp_connection.dart';
+import 'package:farmagest/screens/elenco_farmacie.dart';
 import 'package:farmagest/widgets/switch_row.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ClientiPage extends StatefulWidget {
+class ClientiPage extends ConsumerStatefulWidget {
   const ClientiPage({super.key});
 
   @override
-  State<ClientiPage> createState() => _ClientiPageState();
+  ConsumerState<ClientiPage> createState() => _ClientiPageState();
 }
 
-class _ClientiPageState extends State<ClientiPage> {
+class _ClientiPageState extends ConsumerState<ClientiPage> {
   final TextEditingController _searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    final tcpConnection = ref.read(dnsConnectionProvider.notifier);
+
     return GestureDetector(
       onTap: () {},
       child: Scaffold(
@@ -67,7 +72,38 @@ class _ClientiPageState extends State<ClientiPage> {
                               child: Padding(
                                 padding: const EdgeInsets.all(10.0),
                                 child: ElevatedButton(
-                                  onPressed: () {}, //scanBarcode,
+                                  onPressed: () async {
+                                    tcpConnection.sendMessage(kRiceFarma);
+                                    List<dynamic> fullJson =
+                                        await tcpConnection
+                                            .getFullResponseAsList();
+
+                                    //print(fullJson);
+                                    //todo
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder:
+                                            (context) => ElencoFarmacie(
+                                              farmaciaDati: fullJson,
+                                            ),
+                                      ),
+                                    );
+
+                                    /*
+                                     List<dynamic> fullJson =
+                            await tcpConnection.getFullResponseAsList();
+
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder:
+                                (ctx) => AgendaDetailPage(
+                                  data: formattedDate,
+                                  agendaDati: fullJson,
+                                ),
+                          ),
+                        );
+                                    */
+                                  }, //scanBarcode,
                                   style: ButtonStyle(
                                     backgroundColor: WidgetStateProperty.all(
                                       kLightBrown,

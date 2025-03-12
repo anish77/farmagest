@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:farmagest/data/constants.dart';
 import 'package:farmagest/models/info_pers.dart';
 import 'package:flutter/material.dart';
@@ -34,11 +33,6 @@ class AgendaDetailPage extends StatelessWidget {
     return agendaDatiFinali;
   }
 
-  String removeAfter(String input, String delimiter) {
-    int index = input.indexOf(delimiter) + 3;
-    return (index != -1) ? input.substring(0, index) : input;
-  }
-
   // Funzione per trovare un valore dato un campo
   String findValue(List<dynamic> item, String key) {
     return item
@@ -58,7 +52,6 @@ class AgendaDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     var agendaDatiList = [];
     agendaDatiList = stringToList(agendaDati);
-    print(agendaDatiList);
     Widget content = Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,

@@ -64,6 +64,18 @@ class InfoFarmaciaCard extends StatelessWidget {
     }
   }
 
+  void openGoogleMaps(String destination) async {
+    final Uri url = Uri.parse(
+      "https://www.google.com/maps/dir/?api=1&origin=My+Location&destination=${Uri.encodeComponent(destination)}",
+    );
+
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url, mode: LaunchMode.externalApplication);
+    } else {
+      throw 'Impossibile aprire Google Maps';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -98,7 +110,7 @@ class InfoFarmaciaCard extends StatelessWidget {
                     children: [
                       InkWell(
                         onTap: () {
-                          //print('Bottone premuto!');
+                          openGoogleMaps('$indirizzo $cap');
                         },
                         child: Image.asset(
                           'assets/images/maps.png',

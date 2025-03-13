@@ -1,6 +1,7 @@
 import 'package:farmagest/data/constants.dart';
 import 'package:farmagest/screens/dettaglio_farmacia.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class InfoFarmaciaCard extends StatelessWidget {
@@ -30,7 +31,6 @@ class InfoFarmaciaCard extends StatelessWidget {
   final int index;
 
   void _showNumberDialog(BuildContext context) {
-    // print(cell);
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -57,11 +57,12 @@ class InfoFarmaciaCard extends StatelessWidget {
   }
 
   void _callNumber(String number) async {
+    var logger = Logger(printer: PrettyPrinter());
     final Uri url = Uri.parse('tel:$number');
     if (await canLaunchUrl(url)) {
       await launchUrl(url);
     } else {
-      print('Errore: impossibile aprire il numero');
+      logger.e('Errore: impossibile aprire il numero');
     }
   }
 
@@ -142,13 +143,12 @@ class InfoFarmaciaCard extends StatelessWidget {
                         onPressed: () {
                           _showNumberDialog(context);
                         },
-
-                        child: Icon(Icons.phone, color: Colors.white),
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.green, // Colore del bottone
-                          shape: CircleBorder(), // Per renderlo rotondo
-                          padding: EdgeInsets.all(15), // Padding interno
+                          backgroundColor: Colors.green,
+                          shape: CircleBorder(),
+                          padding: EdgeInsets.all(15),
                         ),
+                        child: Icon(Icons.phone, color: Colors.white),
                       ),
                     ],
                   ),

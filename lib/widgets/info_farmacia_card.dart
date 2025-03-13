@@ -1,4 +1,5 @@
 import 'package:farmagest/data/constants.dart';
+import 'package:farmagest/screens/dettaglio_farmacia.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -80,7 +81,25 @@ class InfoFarmaciaCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // todo det. farmacia
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder:
+                (ctx) => DettaglioFarmacia(
+                  nome: nome,
+                  userId: "userId",
+                  password: "password",
+                  host: "host",
+                  pwdAdmin: "pwdAdmin",
+                  altroAccount: "altroAccount",
+                  ultimoAgg: "ultimoAgg",
+                  dataUltimoC: "dataUltimoC",
+                  oraUltimoC: "oraUltimoC",
+                  versione: "versione",
+                  server: "server",
+                ),
+          ),
+        );
       },
       child: Card(
         margin: const EdgeInsets.all(8),

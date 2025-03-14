@@ -17,8 +17,20 @@ String kLogin =
 String kLogOut = 'quit:';
 String kRiceAgenda = 'riceagenda: ';
 String kFarmacia = 'Borga';
-String kRiceFarma =
-    'riceditt: [["","$kFarmacia","FDPC,A, GUBR,"],"DI",["D1","D2","N11","N13","N2","N2A","N2B","N3","N4","N5"]]';
+const kAggiornoBbs = 'aggiorna_bbsinfo:';
+const kOk = 'ok';
+
+String kCercaFarmacia(kFarmacia) {
+  String kRiceFarma =
+      'riceditt: [["","$kFarmacia","FDPC,A, GUBR,"],"DI",["D1","D2","N11","N13","N2","N2A","N2B","N3","N4","N5"]]';
+  return kRiceFarma;
+}
+
+String kAggiornaBBS(String userId, String psw, String file) {
+  String kAggiornamento =
+      '$kAggiornoBbs ["$userId ","$psw",[ ["AGGIPART","$file","                                                            "]] ]';
+  return kAggiornamento;
+}
 
 //Info
 const kInfoLogin = 'farmaconsult uso interno';
@@ -26,6 +38,17 @@ const kClientiCerca = 'Indicare il nome del cliente';
 const kClientiSoloFarm = 'solo farmacie e paraf.';
 const kClientiSoloAttivi = 'solo attivi';
 const kClientiGestTorino = 'solo gestiti da torino';
+const kAggPart = 'agg. part.';
+const kUserid = 'userid';
+const kPwd = 'password';
+const kHost = 'host';
+const kPwdAdmin = 'pwd admin';
+const kAltroAccount = 'altro account';
+const kUltimoAgg = 'ultimo agg.';
+const kDataUltimoC = 'data ultimo c.';
+const kOraUltimoC = 'ora ultimo c.';
+const kVersione = 'versione';
+const kServer = 'server';
 
 //Colors
 const kWhite = Color.fromARGB(255, 241, 239, 241);

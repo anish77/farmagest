@@ -20,10 +20,28 @@ String kFarmacia = 'Borga';
 const kAggiornoBbs = 'aggiorna_bbsinfo:';
 const kOk = 'ok';
 const kErr = 'err:';
+String kSoloFarmParafarm = 'FDPC';
+String kSoloAttivi = 'A';
+String kSoloGestTorino = ' GUBR';
 
-String kCercaFarmacia(kFarmacia) {
+String kCercaFarmacia(
+  kFarmacia,
+  isSoloFarmParafarm,
+  isSoloAttivi,
+  isSoloGestTorino,
+) {
+  if (isSoloFarmParafarm == false) {
+    kSoloFarmParafarm = '';
+  }
+  if (isSoloAttivi == false) {
+    kSoloAttivi = '';
+  }
+  if (isSoloGestTorino == false) {
+    kSoloGestTorino = '';
+  }
   String kRiceFarma =
-      'riceditt: [["","$kFarmacia","FDPC,A, GUBR,"],"DI",["D1","D2","N11","N13","N2","N2A","N2B","N3","N4","N5"]]';
+      'riceditt: [["","$kFarmacia","$kSoloFarmParafarm,$kSoloAttivi,$kSoloGestTorino,"],"DI",["D1","D2","N11","N13","N2","N2A","N2B","N3","N4","N5"]]';
+
   return kRiceFarma;
 }
 

@@ -147,7 +147,7 @@ class _DettaglioFarmaciaState extends ConsumerState<DettaglioFarmacia> {
                 );
                 await tcpConnection.getResponse(context);
               },
-              child: Text("data"),
+              child: Text("Invia aggiornamento"),
             ),
           ],
         ),

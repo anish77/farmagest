@@ -78,7 +78,7 @@ class AgendaPageState extends ConsumerState<AgendaPage> {
                         tcpConnection.sendMessage(ricerca);
                         List<dynamic> fullJson =
                             await tcpConnection.getFullResponseAsList();
-
+                        if (!context.mounted) return;
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder:

@@ -119,11 +119,7 @@ class AgendaDetailPage extends StatelessWidget {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            // todo
-            // Qui puoi aggiungere logica personalizzata prima di tornare indietro
-            // Navigator.pop(context);
             Navigator.of(context).pop();
-            //Navigator.popUntil(context, ModalRoute.withName(AgendaPage()));
           },
         ),
       ),

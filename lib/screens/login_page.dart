@@ -56,6 +56,7 @@ class LoginPageState extends ConsumerState<LoginPage> {
             Navigator.pop(context);
           });
           if (isLoading == false) {
+            if (!context.mounted) return;
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (ctx) => const TabBarWidget()),
@@ -117,24 +118,9 @@ class LoginPageState extends ConsumerState<LoginPage> {
                         Expanded(
                           child: Padding(
                             padding: const EdgeInsets.all(10.0),
-                            child: ElevatedButton(
-                              onPressed: () {
-                                isLoading = true;
-                                tcpConnection.loginRequest();
-                                login(tcpConnection, context);
-                              },
-                              style: ButtonStyle(
-                                backgroundColor: WidgetStateProperty.all(
-                                  kLightBrown,
-                                ),
-                                side: WidgetStateProperty.all(
-                                  BorderSide(color: kAmberRed, width: 2.0),
-                                ),
-                              ),
-                              child: Text(
-                                'Accedi',
-                                style: (TextStyle(color: kAmberRed)),
-                              ),
+                            child: SizedBox(
+                              height: 45,
+                              child: customButton(tcpConnection, context),
                             ),
                           ),
                         ),
@@ -147,6 +133,24 @@ class LoginPageState extends ConsumerState<LoginPage> {
           ],
         ),
       ),
+    );
+  }
+
+  ElevatedButton customButton(
+    TcpConnectionNotifier tcpConnection,
+    BuildContext context,
+  ) {
+    return ElevatedButton(
+      onPressed: () {
+        isLoading = true;
+        tcpConnection.loginRequest();
+        login(tcpConnection, context);
+      },
+      style: ButtonStyle(
+        backgroundColor: WidgetStateProperty.all(kLightBrown),
+        side: WidgetStateProperty.all(BorderSide(color: kAmberRed, width: 2.0)),
+      ),
+      child: Text('Accedi', style: (TextStyle(color: kAmberRed, fontSize: 20))),
     );
   }
 }

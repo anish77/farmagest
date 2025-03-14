@@ -22,6 +22,16 @@ class ElencoFarmacie extends StatelessWidget {
       String telefono = findValue(item, "N11");
       String cell = findValue(item, "N13");
       String farmAttiva = findValue(item, "INFOEXTRA");
+      String userId = findValue(item, "USERID");
+      String password = findValue(item, "PASSWORD");
+      String host = findValue(item, "LASTIP");
+      String pwdAdmin = findValue(item, "PWDSERVER");
+      String altroAccount = findValue(item, "PWDSERVER2");
+      String ultimoAgg = findValue(item, "LASTAGGI");
+      String dataUltimoC = findValue(item, "LASTDATA");
+      String oraUltimoC = findValue(item, "LASTORA");
+      String versione = findValue(item, "VAR09");
+      String server = findValue(item, "VAR35");
 
       infoFarmacia = InfoFarmacia(
         nome: nome,
@@ -33,6 +43,16 @@ class ElencoFarmacie extends StatelessWidget {
         telefono: telefono,
         cell: cell,
         farmAttiva: farmAttiva,
+        userId: userId,
+        password: password,
+        host: host,
+        pwdAdmin: pwdAdmin,
+        altroAccount: altroAccount,
+        ultimoAgg: ultimoAgg,
+        dataUltimoC: dataUltimoC,
+        oraUltimoC: oraUltimoC,
+        versione: versione,
+        server: server,
       );
       farmaciaList.add(infoFarmacia);
     });
@@ -89,7 +109,16 @@ class ElencoFarmacie extends StatelessWidget {
             telefono: info.telefono,
             cell: info.cell,
             farmAttiva: info.farmAttiva,
-            index: index,
+            userId: info.userId,
+            password: info.password,
+            host: info.host,
+            pwdAdmin: info.pwdAdmin,
+            altroAccount: info.altroAccount,
+            ultimoAgg: info.ultimoAgg,
+            dataUltimoC: info.dataUltimoC,
+            oraUltimoC: info.oraUltimoC,
+            versione: info.versione,
+            server: info.server,
           );
         },
         // InfoFarmaciaCard(infoFarmacia: farmacieDatiList, index: index),

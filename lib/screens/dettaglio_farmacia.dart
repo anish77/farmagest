@@ -1,7 +1,10 @@
 import 'package:farmagest/data/constants.dart';
+import 'package:farmagest/provider/tcp_connection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 
-class DettaglioFarmacia extends StatelessWidget {
+class DettaglioFarmacia extends ConsumerStatefulWidget {
   const DettaglioFarmacia({
     super.key,
     required this.nome,
@@ -30,76 +33,112 @@ class DettaglioFarmacia extends StatelessWidget {
   final String server;
 
   @override
+  ConsumerState<DettaglioFarmacia> createState() => _DettaglioFarmaciaState();
+}
+
+class _DettaglioFarmaciaState extends ConsumerState<DettaglioFarmacia> {
+  String transformData(String inputDate) {
+    // Parsing la stringa in un oggetto DateTime
+    DateTime dateTime = DateTime.parse(inputDate);
+    // Formattare la data nel formato "gg-MM-aa"
+    String formattedDate = DateFormat("dd-MM-yy").format(dateTime);
+    return formattedDate;
+  }
+
+  String _inviaAggiornamento(String file) {
+    if (widget.userId.isNotEmpty &&
+        widget.password.isNotEmpty &&
+        file.isNotEmpty) {
+      return kAggiornaBBS(widget.userId, widget.password, file);
+    } else {
+      return "";
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final tcpConnection = ref.read(dnsConnectionProvider.notifier);
+
     return Scaffold(
       backgroundColor: kLightBrown2,
-      appBar: AppBar(title: Text(nome)),
+      appBar: AppBar(title: Text(widget.nome)),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
             Row(
               children: [
-                SizedBox(width: 120, child: Text('agg. part.')),
+                SizedBox(width: 120, child: Text(kAggPart)),
                 SizedBox(width: 200, child: TextField()), // Larghezza fissa
               ],
             ),
             Row(
               children: [
-                SizedBox(width: 120, child: Text('userid')),
-                Text(userId),
+                SizedBox(width: 120, child: Text(kUserid)),
+                Text(widget.userId),
               ],
             ),
             Row(
               children: [
-                SizedBox(width: 120, child: Text('password')),
-                Text(password),
-              ],
-            ),
-            Row(
-              children: [SizedBox(width: 120, child: Text('host')), Text(host)],
-            ),
-            Row(
-              children: [
-                SizedBox(width: 120, child: Text('pwd admin')),
-                Text(pwdAdmin),
+                SizedBox(width: 120, child: Text(kPwd)),
+                Text(widget.password),
               ],
             ),
             Row(
               children: [
-                SizedBox(width: 120, child: Text('altro account')),
-                Text(altroAccount),
+                SizedBox(width: 120, child: Text(kHost)),
+                Text(widget.host),
               ],
             ),
             Row(
               children: [
-                SizedBox(width: 120, child: Text('ultimo agg.')),
-                Text(ultimoAgg),
+                SizedBox(width: 120, child: Text(kPwdAdmin)),
+                Text(widget.pwdAdmin),
               ],
             ),
             Row(
               children: [
-                SizedBox(width: 120, child: Text('data ultimo c.')),
-                Text(dataUltimoC),
+                SizedBox(width: 120, child: Text(kAltroAccount)),
+                Text(widget.altroAccount),
               ],
             ),
             Row(
               children: [
-                SizedBox(width: 120, child: Text('ora ultimo c.')),
-                Text(oraUltimoC),
+                SizedBox(width: 120, child: Text(kUltimoAgg)),
+                Text(widget.ultimoAgg),
               ],
             ),
             Row(
               children: [
-                SizedBox(width: 120, child: Text('versione')),
-                Text(versione),
+                SizedBox(width: 120, child: Text(kDataUltimoC)),
+                Text(transformData(widget.dataUltimoC)),
               ],
             ),
             Row(
               children: [
-                SizedBox(width: 120, child: Text('server')),
-                Text(server),
+                SizedBox(width: 120, child: Text(kOraUltimoC)),
+                Text(widget.oraUltimoC),
               ],
+            ),
+            Row(
+              children: [
+                SizedBox(width: 120, child: Text(kVersione)),
+                Text(widget.versione),
+              ],
+            ),
+            Row(
+              children: [
+                SizedBox(width: 120, child: Text(kServer)),
+                Text(widget.server),
+              ],
+            ),
+
+            ElevatedButton(
+              onPressed: () async {
+                tcpConnection.sendMessage(_inviaAggiornamento("X_AZZARR.ZIP"));
+                //dynamic response = await tcpConnection.getResponse();
+              },
+              child: Text("data"),
             ),
           ],
         ),
@@ -107,17 +146,3 @@ class DettaglioFarmacia extends StatelessWidget {
     );
   }
 }
-
-/*
-Row(children: [Text('agg. part.'), TextField()]),
-          Row(children: [Text('userid'), Text(userId)]),
-          Row(children: [Text('password'), Text(password)]),
-          Row(children: [Text('host'), Text(host)]),
-          Row(children: [Text('pwd admin'), Text(pwdAdmin)]),
-          Row(children: [Text('altro account'), Text(altroAccount)]),
-          Row(children: [Text('ultimo agg.'), Text(ultimoAgg)]),
-          Row(children: [Text('data ultimo c.'), Text(dataUltimoC)]),
-          Row(children: [Text('ora ultimo c.'), Text(oraUltimoC)]),
-          Row(children: [Text('versione'), Text(versione)]),
-          Row(children: [Text('server'), Text(server)]),
-*/

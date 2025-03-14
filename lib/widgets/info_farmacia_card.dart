@@ -16,7 +16,16 @@ class InfoFarmaciaCard extends StatelessWidget {
     required this.telefono,
     required this.cell,
     required this.farmAttiva,
-    required this.index,
+    required this.userId,
+    required this.password,
+    required this.host,
+    required this.pwdAdmin,
+    required this.altroAccount,
+    required this.ultimoAgg,
+    required this.dataUltimoC,
+    required this.oraUltimoC,
+    required this.versione,
+    required this.server,
   });
 
   final String nome;
@@ -28,7 +37,16 @@ class InfoFarmaciaCard extends StatelessWidget {
   final String telefono;
   final String cell;
   final String farmAttiva;
-  final int index;
+  final String userId;
+  final String password;
+  final String host;
+  final String pwdAdmin;
+  final String altroAccount;
+  final String ultimoAgg;
+  final String dataUltimoC;
+  final String oraUltimoC;
+  final String versione;
+  final String server;
 
   void _showNumberDialog(BuildContext context) {
     showDialog(
@@ -88,16 +106,16 @@ class InfoFarmaciaCard extends StatelessWidget {
             builder:
                 (ctx) => DettaglioFarmacia(
                   nome: nome,
-                  userId: "userId",
-                  password: "password",
-                  host: "host",
-                  pwdAdmin: "pwdAdmin",
-                  altroAccount: "altroAccount",
-                  ultimoAgg: "ultimoAgg",
-                  dataUltimoC: "dataUltimoC",
-                  oraUltimoC: "oraUltimoC",
-                  versione: "versione",
-                  server: "server",
+                  userId: userId,
+                  password: password,
+                  host: host,
+                  pwdAdmin: pwdAdmin,
+                  altroAccount: altroAccount,
+                  ultimoAgg: ultimoAgg,
+                  dataUltimoC: dataUltimoC,
+                  oraUltimoC: oraUltimoC,
+                  versione: versione,
+                  server: server,
                 ),
           ),
         );

@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:farmagest/data/constants.dart';
+import 'package:farmagest/widgets/alert.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logger/logger.dart';
 import 'package:tcp_socket_connection/tcp_socket_connection.dart';
@@ -45,6 +47,27 @@ class TcpConnectionNotifier extends StateNotifier<String?> {
     });
 
     return completer.future;
+  }
+
+  Future<String> getResponse(BuildContext context) async {
+    String responseBuffer = '';
+
+    StreamSubscription<dynamic>? subscription;
+    subscription = responseStream.listen((chunk) {
+      responseBuffer += chunk; // Accumula i dati ricevuti
+
+      if (responseBuffer != '') {
+        if (!context.mounted) return;
+        Alert().showPopup(
+          context,
+          responseBuffer,
+        ); // Evita di usare context se il widget è stato smontato
+        responseBuffer = '';
+        subscription?.cancel(); // smetti di ascoltare
+      }
+    });
+
+    return responseBuffer;
   }
 
   //starting the connection and listening to the socket asynchronously

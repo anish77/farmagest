@@ -16,7 +16,7 @@ class AgendaDetailPage extends StatelessWidget {
     List<dynamic> agendaDatiFinali = [];
     InfoPers infoPers;
 
-    agendaDati.forEach((item) {
+    for (var item in agendaDati) {
       String oggetto = findValue(item, "OGGETTO");
       String operatore = findValue(item, "OPERATORE");
       String campo02 = findValue(item, "CAMPO02");
@@ -27,8 +27,7 @@ class AgendaDetailPage extends StatelessWidget {
         campo02: campo02,
       );
       agendaDatiFinali.add(infoPers);
-      //print("OGGETTO: $oggetto | OPERATORE: $operatore | CAMPO02: $campo02");*/
-    });
+    }
 
     return agendaDatiFinali;
   }

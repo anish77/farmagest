@@ -73,13 +73,13 @@ class _ClientiPageState extends ConsumerState<ClientiPage> {
                                 padding: const EdgeInsets.all(10.0),
                                 child: ElevatedButton(
                                   onPressed: () async {
-                                    tcpConnection.sendMessage(kRiceFarma);
+                                    tcpConnection.sendMessage(
+                                      kCercaFarmacia(_searchController.text),
+                                    );
                                     List<dynamic> fullJson =
                                         await tcpConnection
                                             .getFullResponseAsList();
 
-                                    //print(fullJson);
-                                    //todo
                                     Navigator.of(context).push(
                                       MaterialPageRoute(
                                         builder:
@@ -88,22 +88,7 @@ class _ClientiPageState extends ConsumerState<ClientiPage> {
                                             ),
                                       ),
                                     );
-
-                                    /*
-                                     List<dynamic> fullJson =
-                            await tcpConnection.getFullResponseAsList();
-
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder:
-                                (ctx) => AgendaDetailPage(
-                                  data: formattedDate,
-                                  agendaDati: fullJson,
-                                ),
-                          ),
-                        );
-                                    */
-                                  }, //scanBarcode,
+                                  },
                                   style: ButtonStyle(
                                     backgroundColor: WidgetStateProperty.all(
                                       kLightBrown,

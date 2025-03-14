@@ -19,6 +19,7 @@ String kRiceAgenda = 'riceagenda: ';
 String kFarmacia = 'Borga';
 const kAggiornoBbs = 'aggiorna_bbsinfo:';
 const kOk = 'ok';
+const kErr = 'err:';
 
 String kCercaFarmacia(kFarmacia) {
   String kRiceFarma =

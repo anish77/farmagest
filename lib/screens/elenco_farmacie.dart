@@ -12,7 +12,7 @@ class ElencoFarmacie extends StatelessWidget {
     List<dynamic> farmaciaList = [];
     InfoFarmacia infoFarmacia;
 
-    farmaciaDati.forEach((item) {
+    for (var item in farmaciaDati) {
       String nome = findValue(item, "D2");
       String secNome = findValue(item, "N2");
       String codice = findValue(item, "D1");
@@ -55,7 +55,7 @@ class ElencoFarmacie extends StatelessWidget {
         server: server,
       );
       farmaciaList.add(infoFarmacia);
-    });
+    }
 
     return farmaciaList;
   }

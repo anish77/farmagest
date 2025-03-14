@@ -37,6 +37,7 @@ class DettaglioFarmacia extends ConsumerStatefulWidget {
 }
 
 class _DettaglioFarmaciaState extends ConsumerState<DettaglioFarmacia> {
+  final TextEditingController _aggiornamento = TextEditingController();
   String transformData(String inputDate) {
     // Parsing la stringa in un oggetto DateTime
     DateTime dateTime = DateTime.parse(inputDate);
@@ -69,7 +70,13 @@ class _DettaglioFarmaciaState extends ConsumerState<DettaglioFarmacia> {
             Row(
               children: [
                 SizedBox(width: 120, child: Text(kAggPart)),
-                SizedBox(width: 200, child: TextField()), // Larghezza fissa
+                SizedBox(
+                  width: 200,
+                  child: TextField(
+                    textCapitalization: TextCapitalization.characters,
+                    controller: _aggiornamento,
+                  ),
+                ), // Larghezza fissa
               ],
             ),
             Row(
@@ -135,8 +142,10 @@ class _DettaglioFarmaciaState extends ConsumerState<DettaglioFarmacia> {
 
             ElevatedButton(
               onPressed: () async {
-                tcpConnection.sendMessage(_inviaAggiornamento("X_AZZARR.ZIP"));
-                //dynamic response = await tcpConnection.getResponse();
+                tcpConnection.sendMessage(
+                  _inviaAggiornamento(_aggiornamento.text),
+                );
+                await tcpConnection.getResponse(context);
               },
               child: Text("data"),
             ),

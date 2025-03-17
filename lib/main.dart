@@ -33,6 +33,8 @@ class App extends StatelessWidget {
     getDeviceInfo();
     return MaterialApp(
       //theme: theme,
+      locale: Locale('it', 'IT'),
+
       home: const LoginPage(),
     );
   }

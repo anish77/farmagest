@@ -35,15 +35,16 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
   flutter_riverpod: ^2.6.1
-  table_calendar: ^3.2.0
   logger: ^2.5.0
   tcp_socket_connection: ^0.3.1
-  intl: ^0.20.2
   shared_preferences: ^2.5.2
   url_launcher: ^6.3.1
   permission_handler: ^11.4.0
   google_maps_flutter: ^2.10.1
   device_info_plus: ^11.3.3
+  intl: ^0.20.2
+  syncfusion_flutter_calendar: ^28.2.11
+  table_calendar: ^3.2.0
 
 dev_dependencies:
   flutter_test:

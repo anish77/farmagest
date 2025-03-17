@@ -1,6 +1,5 @@
 import 'package:farmagest/data/constants.dart';
 import 'package:farmagest/provider/tcp_connection.dart';
-import 'package:farmagest/screens/agenda2.dart';
 import 'package:farmagest/screens/agenda_page.dart';
 import 'package:farmagest/screens/clienti_page.dart';
 import 'package:farmagest/screens/login_page.dart';
@@ -65,8 +64,7 @@ class _TabBarWidgetState extends ConsumerState<TabBarWidget> {
         index: _currentIndex,
         children: [
           Center(child: ClientiPage()),
-          //Center(child: AgendaPage()),
-          Center(child: CalendarScreen()),
+          Center(child: AgendaPage()),
           Center(),
         ],
       ),

@@ -16,9 +16,8 @@ class App extends StatelessWidget {
   Future<void> getDeviceInfo() async {
     if (Platform.isAndroid) {
       var androidInfo = await DeviceInfoPlugin().androidInfo;
-      kDeviceModel =
-          'Android ${androidInfo.version.release}'; //kDeviceVerRelease
-      kDeviceVerRelease = androidInfo.model;
+      kDeviceModel = 'Android ${androidInfo.model}'; //kDeviceVerRelease
+      kDeviceVerRelease = androidInfo.id;
     } else if (Platform.isIOS) {
       var iosInfo = await DeviceInfoPlugin().iosInfo;
       kDeviceVerRelease = iosInfo.systemVersion;

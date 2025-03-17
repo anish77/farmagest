@@ -19,7 +19,8 @@ class TcpConnectionNotifier extends StateNotifier<String?> {
   var logger = Logger(printer: PrettyPrinter());
 
   void loginRequest() {
-    connectAndSendMessage(kIp, kLogin, tcpSocket);
+    final login = kLogin();
+    connectAndSendMessage(kIp, login, tcpSocket);
   }
 
   Future<List<dynamic>> getFullResponseAsList() async {

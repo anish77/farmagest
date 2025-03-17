@@ -7,13 +7,18 @@ const kAppVer = 'Farmagest 1.9.8.1';
 String kCodice = 'farma';
 String kPassword = 'zeffir';
 
-String kDeviceId = '';
-String kDeviceModel = '';
-String kDeviceVerRelease = '';
+String kDeviceId = 'B0173E3B-07D8-4419-8FC1-6623D5104F1F';
+String kDeviceModel = ''; //'iPhone13,2';
+String kDeviceVerRelease = ''; //'17.6.1';
 String kDeviceDisp = '';
 
-String kLogin =
-    "login: ['$kCodice','$kPassword','$kAppVer','B0173E3B-07D8-4419-8FC1-6623D5104F1F','iPhone13,2','17.6.1','',''] ";
+String kLogin() {
+  print(
+    'kDeviceModel ------------ $kDeviceModel, kDeviceVerRelease ------------ $kDeviceVerRelease',
+  );
+  return "login: ['$kCodice','$kPassword','$kAppVer','$kDeviceId','$kDeviceModel','$kDeviceVerRelease','',''] ";
+}
+
 String kLogOut = 'quit:';
 String kRiceAgenda = 'riceagenda: ';
 String kFarmacia = 'Borga';

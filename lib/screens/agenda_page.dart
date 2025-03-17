@@ -4,7 +4,8 @@ import 'package:farmagest/screens/agenda_detail_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:table_calendar/table_calendar.dart';
+import 'package:farmagest/librarie/table_calendar.dart';
+import 'package:farmagest/librarie/utils.dart';
 
 class AgendaPage extends ConsumerStatefulWidget {
   const AgendaPage({super.key});

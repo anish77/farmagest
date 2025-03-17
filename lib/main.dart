@@ -19,14 +19,13 @@ class App extends StatelessWidget {
       kDeviceModel =
           'Android ${androidInfo.version.release}'; //kDeviceVerRelease
       kDeviceVerRelease = androidInfo.model;
-
-      print(
-        "main ----------- $androidInfo, ----- $kDeviceVerRelease, ----- $kDeviceModel",
-      );
     } else if (Platform.isIOS) {
       var iosInfo = await DeviceInfoPlugin().iosInfo;
-      kDeviceVerRelease = 'iPhone${iosInfo.systemVersion}';
-      kDeviceModel = iosInfo.model;
+      kDeviceVerRelease = iosInfo.systemVersion;
+      kDeviceModel = iosInfo.modelName;
+      if (iosInfo.identifierForVendor != '') {
+        kDeviceId = iosInfo.identifierForVendor!;
+      }
     }
   }
 

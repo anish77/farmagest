@@ -73,32 +73,35 @@ class AgendaPageState extends ConsumerState<AgendaPage> {
                 Expanded(
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16.0),
-                    child: ElevatedButton(
-                      onPressed: () async {
-                        final ricerca = '$kRiceAgenda [["$formattedDate"]]';
-                        tcpConnection.sendMessage(ricerca);
-                        List<dynamic> fullJson =
-                            await tcpConnection.getFullResponseAsList();
-                        if (!context.mounted) return;
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder:
-                                (ctx) => AgendaDetailPage(
-                                  data: formattedDate,
-                                  agendaDati: fullJson,
-                                ),
+                    child: SizedBox(
+                      height: 45,
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          final ricerca = '$kRiceAgenda [["$formattedDate"]]';
+                          tcpConnection.sendMessage(ricerca);
+                          List<dynamic> fullJson =
+                              await tcpConnection.getFullResponseAsList();
+                          if (!context.mounted) return;
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder:
+                                  (ctx) => AgendaDetailPage(
+                                    data: formattedDate,
+                                    agendaDati: fullJson,
+                                  ),
+                            ),
+                          );
+                        },
+                        style: ButtonStyle(
+                          backgroundColor: WidgetStateProperty.all(kLightBrown),
+                          side: WidgetStateProperty.all(
+                            BorderSide(color: kAmberRed, width: 2.0),
                           ),
-                        );
-                      },
-                      style: ButtonStyle(
-                        backgroundColor: WidgetStateProperty.all(kLightBrown),
-                        side: WidgetStateProperty.all(
-                          BorderSide(color: kAmberRed, width: 2.0),
                         ),
-                      ),
-                      child: Text(
-                        'Cerca',
-                        style: (TextStyle(color: kAmberRed)),
+                        child: Text(
+                          'Cerca',
+                          style: (TextStyle(color: kAmberRed)),
+                        ),
                       ),
                     ),
                   ),

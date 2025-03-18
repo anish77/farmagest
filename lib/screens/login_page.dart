@@ -43,11 +43,6 @@ class LoginPageState extends ConsumerState<LoginPage> {
       showDialogIndicator(context);
     }
 
-    /*  ref
-        .read(dnsConnectionProvider.notifier)
-        .connectAndSendMessage(kIp, kLogin, socketConnection); */
-    // connection.connectAndSendMessage(kIp, kLogin, socketConnection);
-
     try {
       connection.responseStream.listen((response) {
         if (response.contains('login: ')) {

@@ -1,6 +1,7 @@
 import 'package:farmagest/data/constants.dart';
 import 'package:farmagest/provider/tcp_connection.dart';
 import 'package:farmagest/screens/elenco_farmacie.dart';
+import 'package:farmagest/widgets/timer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -17,6 +18,24 @@ class _ClientiPageState extends ConsumerState<ClientiPage> {
   bool isFarmParaf = true; // Stato iniziale dello switch
   bool isAttivi = true; // Stato iniziale dello switch
   bool isSoloTorino = true; // Stato iniziale dello switch
+  final _timer = TimerWidget();
+
+  @override
+  void initState() {
+    super.initState();
+    final tcpConnection = ref.read(dnsConnectionProvider.notifier);
+    _timer.resetInactivityTimer(
+      context,
+      tcpConnection,
+    ); // Avvia il timer quando l'app viene aperta // Avvia il timer quando l'app viene aperta
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    _timer.inactivityTimer?.cancel();
+    super.dispose();
+  }
 
   void handleSwitchChange(String filter, bool value) {
     setState(() {
@@ -35,7 +54,7 @@ class _ClientiPageState extends ConsumerState<ClientiPage> {
     final tcpConnection = ref.read(dnsConnectionProvider.notifier);
 
     return GestureDetector(
-      onTap: () {},
+      onTap: () => _timer.onUserInteraction(context, tcpConnection),
       child: Scaffold(
         appBar: AppBar(
           title: Center(

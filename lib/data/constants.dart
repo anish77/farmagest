@@ -70,6 +70,7 @@ const kDataUltimoC = 'data ultimo c.';
 const kOraUltimoC = 'ora ultimo c.';
 const kVersione = 'versione';
 const kServer = 'server';
+const kComunicInterrotta = "comunicazione interrotta";
 
 //Colors
 const kWhite = Color.fromARGB(255, 241, 239, 241);
